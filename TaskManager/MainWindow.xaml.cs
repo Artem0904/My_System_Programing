@@ -34,8 +34,8 @@ namespace TaskManager
 
         private void EndProcess_Click(object sender, RoutedEventArgs e)
         {
-            selectedProcess = Process.GetProcessById(Convert.ToInt32(Id));
-            selectedProcess.Kill();
+            //selectedProcess = Process.GetProcessById(Id);    .......
+            //selectedProcess.Kill();
         }
     }
 }
