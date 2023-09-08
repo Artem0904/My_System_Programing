@@ -45,6 +45,9 @@ namespace Processes
                 Thread.Sleep(10);
             }
         }
+
+        /////////////////////////
+        
         public static void RandomNumbers()
         {
             Random r = new Random();
@@ -52,26 +55,33 @@ namespace Processes
             for (int i = 0; i < size; i++)
             {
                 nums.Add(r.Next(0, size));
-                Console.WriteLine(nums[i]);
+                //Console.WriteLine(nums[i]);
+            }
+        }
+        public static void PrintNums()
+        {
+            foreach (var item in nums)
+            {
+                Console.WriteLine(item);
             }
         }
         public static void FindMaxNum()
         { 
-            MaxNum = nums.Max();
-            Console.WriteLine("===========" + MaxNum);
+            MaxNum = nums.Max(x => x);
+            Console.WriteLine("===========max " + MaxNum);
 
         }
         public static void FindMinNum()
         {
             MinNum = nums.Min();
-            Console.WriteLine("===========" + MinNum);
+            Console.WriteLine("===========min " + MinNum);
 
 
         }
         public static void FindAvgNum()
         {
             AvgNum = (int)nums.Average();
-            Console.WriteLine("===========" + AvgNum);
+            Console.WriteLine("===========avg " + AvgNum);
 
         }
         static void Main(string[] args)
@@ -88,8 +98,8 @@ namespace Processes
             //Console.Write("How many theards : ");
             //int countTheards = Convert.ToInt32(Console.ReadLine());
             //if (countTheards <= 0)
-
             //    return;
+
             //for (int i = 0; i < countTheards; i++)
             //{
             //    Thread tmpT = new Thread(Numbers);
@@ -99,14 +109,17 @@ namespace Processes
             ////// 4
 
             Thread TGenerate = new Thread(RandomNumbers);
+            TGenerate.Priority = ThreadPriority.Highest;
             TGenerate.Start();
-           
+            PrintNums();
+
+
 
             Thread TMax = new Thread(FindMaxNum);
-            TMax.Start();
             Thread TMin = new Thread(FindMinNum);
-            TMin.Start();
             Thread TAvg = new Thread(FindAvgNum);
+            TMax.Start();
+            TMin.Start();
             TAvg.Start();
 
         }
