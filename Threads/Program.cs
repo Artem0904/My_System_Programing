@@ -113,8 +113,6 @@ namespace Processes
             TGenerate.Start();
             PrintNums();
 
-
-
             Thread TMax = new Thread(FindMaxNum);
             Thread TMin = new Thread(FindMinNum);
             Thread TAvg = new Thread(FindAvgNum);
