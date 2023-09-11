@@ -24,36 +24,39 @@ namespace _03_C_Interlocked_Monitor
         {
             string[] files = Directory.GetFiles("C:\\Users\\dev\\Desktop", "*.txt");
             Analyse analyse = new Analyse();
-            Thread thread = null; // ліст потоків
+            List<Thread> threads = new List<Thread>();
             foreach (var file in files)
-            {
-
+            { 
                 string text = File.ReadAllText(file);
-                //ThreadPool.QueueUserWorkItem(TextAnalyse, text);
-                thread = new Thread(TextAnalyse); 
+                Thread thread = new Thread(TextAnalyse);
+                threads.Add(thread);
                 thread.Start(text);
-
-            }//зробити цикл щоб все заджоїнити
-            thread.Join();
+            }
+            foreach (var thread in threads)
+            {
+                thread.Join();
+            }
             // show total statistic
-            Console.WriteLine($"Count Digits : {Statistic.Digits}");
             Console.WriteLine($"Count Punctuation : {Statistic.Punctuation}");
-
+            Console.WriteLine($"Count Digits : {Statistic.Digits}");
+            Console.WriteLine($"Count Letters : {Statistic.Letters}");
         }
 
         static void TextAnalyse(object text)
         {
             // text analyse how many letters, digits etc.
             string AnalyseText = (string)text;
-            string Digits = "1234567890";
-            string Punctuation = ".,;:-.!?\"\"''«»(){}[]<>/\\";
             for (int i = 0; i < AnalyseText.Length; i++)
             {
-                if (AnalyseText.Contains(Digits))
+                if (char.IsDigit(AnalyseText[i])) 
                 {
                     Statistic.Digits++;
                 }
-                else if (AnalyseText.Contains(Punctuation))
+                else if (char.IsLetter(AnalyseText[i]))
+                {
+                    Statistic.Letters++;
+                }
+                else if (char.IsPunctuation(AnalyseText[i]))
                 {
                     Statistic.Punctuation++;
                 }
