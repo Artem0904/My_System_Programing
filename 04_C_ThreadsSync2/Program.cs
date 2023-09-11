@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Threading;
 
 namespace _04_C_ThreadsSync2
 {
     internal class Program
     {
+        static int a = 0, b = 0;
+
+
         static void Main(string[] args)
         {
             // Завдання 1:
@@ -14,12 +18,12 @@ namespace _04_C_ThreadsSync2
             // три потоки, інші потоки знаходяться в черзі. Як тільки якийсь потік завершує
             // своє виконання, новий запускається
 
-            Semaphore s = new Semaphore(3, 3);
+            //Semaphore s = new Semaphore(3, 3);
 
-            for (int i = 0; i < 10; ++i)
-                ThreadPool.QueueUserWorkItem(RandNum, s);
+            //for (int i = 0; i < 10; ++i)
+            //    ThreadPool.QueueUserWorkItem(RandNum, s);
 
-            Console.ReadKey();
+            //Console.ReadKey();
 
 
             // Завдання 2:
@@ -29,7 +33,41 @@ namespace _04_C_ThreadsSync2
             // суму кожної пари. Результат записується в файл. Третій потік теж очікує завершення генерації, 
             // після чого підраховує добуток кожної пари.Результат записується в файл.
 
+            //AutoResetEvent resetEvent = new AutoResetEvent(false);
+            ManualResetEvent resetEvent = new ManualResetEvent(false);
+
+
+            ThreadPool.QueueUserWorkItem(Pair, resetEvent);     
+            ThreadPool.QueueUserWorkItem(Sum, resetEvent);
+            ThreadPool.QueueUserWorkItem(Multiply, resetEvent);
+
+            Console.ReadKey();
+
         }
+        public static void Pair(object obj)
+        {
+            Random rnd = new Random();
+            a = rnd.Next(0, 100);
+            b = rnd.Next(0, 100);
+            //File.WriteAllText("C:\\Users\\dev\\Desktop\\Pair", $"\n\n{a} {b}\n");
+            Console.WriteLine($"\n\n{a} {b}\n");
+            ((EventWaitHandle)obj).Set();
+        }
+
+        public static void Sum(object obj)
+        {
+            ((EventWaitHandle)obj).WaitOne();   
+            //File.WriteAllText("C:\\Users\\dev\\Desktop\\Sum", $"Sum : {a + b}\n");
+            Console.WriteLine($"Sum : {a + b}\n");
+        }
+
+        public static void Multiply(object obj) 
+        {
+            ((EventWaitHandle)obj).WaitOne();
+            //File.WriteAllText("C:\\Users\\dev\\Desktop\\Multiply", $"Multiply : {a * b}\n");
+            Console.WriteLine($"Multiply : {a * b}\n");
+        }
+
 
         public static void RandNum(object semaphore)
         {
@@ -45,7 +83,6 @@ namespace _04_C_ThreadsSync2
                         Console.WriteLine("Thread {0} start", Thread.CurrentThread.ManagedThreadId);
                         for (int i = 0; i < 5; ++i)
                             Console.WriteLine($"{new Random().Next(0, 100)} ");
-                        //Console.WriteLine();
                         Thread.Sleep(4000);
                     }
                     finally
