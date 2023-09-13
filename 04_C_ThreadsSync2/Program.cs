@@ -33,9 +33,7 @@ namespace _04_C_ThreadsSync2
             // суму кожної пари. Результат записується в файл. Третій потік теж очікує завершення генерації, 
             // після чого підраховує добуток кожної пари.Результат записується в файл.
 
-            //AutoResetEvent resetEvent = new AutoResetEvent(false);
             ManualResetEvent resetEvent = new ManualResetEvent(false);
-
 
             ThreadPool.QueueUserWorkItem(Pair, resetEvent);     
             ThreadPool.QueueUserWorkItem(Sum, resetEvent);
@@ -49,22 +47,19 @@ namespace _04_C_ThreadsSync2
             Random rnd = new Random();
             a = rnd.Next(0, 100);
             b = rnd.Next(0, 100);
-            //File.WriteAllText("C:\\Users\\dev\\Desktop\\Pair", $"\n\n{a} {b}\n");
             Console.WriteLine($"\n\n{a} {b}\n");
             ((EventWaitHandle)obj).Set();
         }
 
         public static void Sum(object obj)
         {
-            ((EventWaitHandle)obj).WaitOne();   
-            //File.WriteAllText("C:\\Users\\dev\\Desktop\\Sum", $"Sum : {a + b}\n");
+            ((EventWaitHandle)obj).WaitOne();
             Console.WriteLine($"Sum : {a + b}\n");
         }
 
         public static void Multiply(object obj) 
         {
             ((EventWaitHandle)obj).WaitOne();
-            //File.WriteAllText("C:\\Users\\dev\\Desktop\\Multiply", $"Multiply : {a * b}\n");
             Console.WriteLine($"Multiply : {a * b}\n");
         }
 

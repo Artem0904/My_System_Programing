@@ -32,7 +32,7 @@ namespace Processes
 
             int left = pair1.left;
             int right = pair1.right;
-            if (left > pair1.right)
+            if (left > right)
             {
                 int tmp;
                 tmp = left;

@@ -22,6 +22,10 @@ namespace _03_C_Interlocked_Monitor
         public static Stat Statistic = new Stat();
         static void Main(string[] args)
         {
+
+            Task Time1 = new Task(() => Console.WriteLine($"{DateTime.Now}"));
+            Time1.Start();
+
             string[] files = Directory.GetFiles("C:\\Users\\dev\\Desktop", "*.txt");
             Analyse analyse = new Analyse();
             List<Thread> threads = new List<Thread>();
