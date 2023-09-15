@@ -8,15 +8,18 @@
         Title="MainWindow" Height="450" Width="800">
     <DockPanel>
         <ToolBar DockPanel.Dock="Top">
-            <Button Click="Button_Click">Refresh</Button>
+            <Button Click="Refresh_Click">Refresh</Button>
+            <Button Click="Info_Click">Info</Button>
+            <Button Click="Delete_Click">Delete</Button>
         </ToolBar>
-        <DataGrid Name="grid" AutoGenerateColumns="False" IsReadOnly="True" MouseDoubleClick="grid_MouseDoubleClick">
+        <DataGrid Name="grid" AutoGenerateColumns="True" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="PID" Binding="{Binding Id}" />
                 <DataGridTextColumn Header="Process Name" Binding="{Binding ProcessName}" />
-                <DataGridTextColumn Header="Priority" Binding="{Binding PriorityClass}" />
+                <DataGridTextColumn Header="Priority" Binding="{Binding PriorityClass}"/>
+                <DataGridTextColumn Header="MachineName" Binding="{Binding MachineName}" />
                 <DataGridTextColumn Header="User Name" Binding="{Binding UserName}" />
-
+                <DataGridTextColumn Header="PagedMemorySize" Binding="{Binding PagedMemorySize}" />
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

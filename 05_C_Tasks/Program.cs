@@ -71,8 +71,7 @@ namespace _05_C_Tasks
         }
         public static int FindSum(List<int> ListNums)
         {
-            int Sum = (int)ListNums.Sum();
-            return Sum;
+            return ListNums.Sum();
         }
         public static void RemoveDublicate(ref List<int> ListNums)
         {

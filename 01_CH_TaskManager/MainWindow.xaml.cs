@@ -27,25 +27,27 @@ namespace _01_CH_TaskManager
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Refresh_Click(object sender, RoutedEventArgs e)
         {
             grid.ItemsSource = Process.GetProcesses();
         }
 
-        private void grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        [Obsolete]
+        private void Info_Click(object sender, RoutedEventArgs e)
         {
-            var res = MessageBox.Show(@$"
+            MessageBox.Show(@$"
 Process Name          : {((Process)grid.SelectedItem).ProcessName}
 Machine Name          : {((Process)grid.SelectedItem).MachineName}
 Start Time            : {((Process)grid.SelectedItem).StartTime}
 Base Priority         : {((Process)grid.SelectedItem).BasePriority}
 Total Processor Time  : {((Process)grid.SelectedItem).TotalProcessorTime}
+Paged Memory Size     : {((Process)grid.SelectedItem).PagedMemorySize}
+");
+        }
 
-Wanna delete it?");
-            //if (res == MessageBoxResult.Yes)
-            //{
-            //    ((Process)grid.SelectedItem).Kill();
-            //}
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            ((Process)grid.SelectedItem).Kill();
         }
     }
 }

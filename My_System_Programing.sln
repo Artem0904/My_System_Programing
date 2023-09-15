@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "04_C_ThreadsSync2", "04_C_T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "05_C_Tasks", "05_C_Tasks\05_C_Tasks.csproj", "{B323E36A-E74F-429C-92E2-CFFEE8C1EBBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06_H_Theards", "06_H_Theards\06_H_Theards.csproj", "{BB3C6585-50D8-4A44-BC8D-8E6F2D8DB9EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "06_H_Theards", "06_H_Theards\06_H_Theards.csproj", "{BB3C6585-50D8-4A44-BC8D-8E6F2D8DB9EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_CH_TaskManager", "01_CH_TaskManager\01_CH_TaskManager.csproj", "{97A949A0-4CCD-46FB-BD7B-22D384B4C4A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "01_CH_TaskManager", "01_CH_TaskManager\01_CH_TaskManager.csproj", "{97A949A0-4CCD-46FB-BD7B-22D384B4C4A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "07_C_Parallel", "07_C_Parallel\07_C_Parallel.csproj", "{AB44940B-DC38-4B47-AEDE-1004F873100E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{97A949A0-4CCD-46FB-BD7B-22D384B4C4A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97A949A0-4CCD-46FB-BD7B-22D384B4C4A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97A949A0-4CCD-46FB-BD7B-22D384B4C4A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB44940B-DC38-4B47-AEDE-1004F873100E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB44940B-DC38-4B47-AEDE-1004F873100E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB44940B-DC38-4B47-AEDE-1004F873100E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB44940B-DC38-4B47-AEDE-1004F873100E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
