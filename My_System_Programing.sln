@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "03_C_Interlocked_Monitor", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "04_C_ThreadsSync2", "04_C_ThreadsSync2\04_C_ThreadsSync2.csproj", "{A8B4B246-BA87-43B6-82B9-AAF022716FDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05_C_Tasks", "05_C_Tasks\05_C_Tasks.csproj", "{B323E36A-E74F-429C-92E2-CFFEE8C1EBBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "05_C_Tasks", "05_C_Tasks\05_C_Tasks.csproj", "{B323E36A-E74F-429C-92E2-CFFEE8C1EBBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06_H_Theards", "06_H_Theards\06_H_Theards.csproj", "{BB3C6585-50D8-4A44-BC8D-8E6F2D8DB9EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{B323E36A-E74F-429C-92E2-CFFEE8C1EBBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B323E36A-E74F-429C-92E2-CFFEE8C1EBBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B323E36A-E74F-429C-92E2-CFFEE8C1EBBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB3C6585-50D8-4A44-BC8D-8E6F2D8DB9EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB3C6585-50D8-4A44-BC8D-8E6F2D8DB9EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB3C6585-50D8-4A44-BC8D-8E6F2D8DB9EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB3C6585-50D8-4A44-BC8D-8E6F2D8DB9EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
