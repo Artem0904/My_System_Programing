@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace TaskManager
+namespace _01_CH_TaskManager
 {
     /// <summary>
     /// Interaction logic for App.xaml
