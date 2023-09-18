@@ -34,13 +34,13 @@ namespace _06_H_Theards
         private List<int> FibonacciNums = new List<int>();
         private List<int> PrimaryNums = new List<int>();
 
-        private void Fibonacci(int left)
+        private void Fibonacci(int right)
         {
             int a = 0;
             int b = 1;
-            if (left < 0)
-            { left = 1000; }
-            for (int i = 0; i < left; i++)
+            if (right < 0)
+            { right = 100; }
+            for (int i = 0; i < right; i++)
             {
                 int temp = a;
                 a = b;

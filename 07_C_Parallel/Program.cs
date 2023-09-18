@@ -19,17 +19,21 @@ namespace _07_C_Parallel
 
             //Parallel.For(5, 9, MultiplyTable);
 
-            /// 4
+            /// #4
 
-            var ListNums = new List<int>();
+            List<int> ListNums = new List<int>();
             Parallel.Invoke(() => ReadNumsFromFile(ref ListNums));
             Parallel.ForEach(ListNums, Factorial);
+
+            /// #5
+
             var sum = ListNums.AsParallel().Sum();
             var max = ListNums.AsParallel().Max();
             var min = ListNums.AsParallel().Min();
             Console.WriteLine($"Sum : {sum}");
             Console.WriteLine($"Max : {max}");
             Console.WriteLine($"Min : {min}");
+            
         }
         static void ReadNumsFromFile(ref List<int> ListNums)
         {
@@ -47,18 +51,7 @@ namespace _07_C_Parallel
             }
         }
         static void MultiplyTable(int num)
-        {
-
-            /*for(int i = left; i <= right; i++)
-            {
-                for(int j = 1; j <= 10; j++)
-                {
-                    Console.WriteLine($"{i} * {j} = {i*j}");
-                }
-                Console.WriteLine();
-            }*/
-
-            
+        {   
             using (FileStream fs = new FileStream($"Table for {num}.txt", FileMode.OpenOrCreate))
             {
                 for (int i = 1; i <= 10; i++)
