@@ -27,31 +27,73 @@ namespace _08_2__C_AsyncAwait_CopyFile
             InitializeComponent();
         }
 
+        private string CheckFilesName(string FileName)
+        {
+            string FolderPath = CopyFromTBox.Text.Remove(CopyFromTBox.Text.LastIndexOf('\\'));
+            string[] tmp = Directory.GetFiles(FolderPath);
+            for (int i = 0; i < tmp.Length; i++)
+            {
+                //CopyToTBox.Text += $"({i + 1})";
+                FileName += $"({i + 1})";
+                if (!File.Exists(CopyToTBox.Text))
+                {
+                    break;
+                }
+            }
+            return FileName;
+        }
         private void Copy_Button(object sender, RoutedEventArgs e)
         {
+            string FileNameDest = CopyToTBox.Text;
             if (!File.Exists(CopyFromTBox.Text))
             {
                 MessageBox.Show($"File {CopyFromTBox.Text} not exist!");
                 return;
             }
-            else if (File.Exists(CopyToTBox.Text))
+            else if (File.Exists(FileNameDest))
             {
                 string FolderPath = CopyFromTBox.Text.Remove(CopyFromTBox.Text.LastIndexOf('\\'));
                 string[] tmp = Directory.GetFiles(FolderPath);
-                for(int i = 0; i < tmp.Length; i++)
+                FileNameDest.Insert(FileNameDest.LastIndexOf('.'), $"(1)"); 
+                for (int i = 0; i < tmp.Length; i++)
                 {
-                    CopyToTBox.Text += $"({i + 1})";
-                    if (!File.Exists(CopyToTBox.Text))
+                    //if (FileNameDest.Contains('('))
+                    //{
+                    //    FileNameDest.Remove(FileNameDest.LastIndexOf('('));
+                    //    MessageBox.Show(FileNameDest);
+                    //}
+                    int indexNumber = FileNameDest.LastIndexOf(')') - 1;
+                    //FileNameDest.Replace(FileNameDest.LastIndexOf('(')), $"{indexNumber + 1}");
+                    FileNameDest.Replace($"({FileNameDest[indexNumber]})", $"({FileNameDest[indexNumber + 1]})");
+                    //FileNameDest.Remove(FileNameDest.LastIndexOf('.'));
+                    MessageBox.Show(FileNameDest);
+                    FileNameDest += $"({i + 1}).txt";
+                    MessageBox.Show(FileNameDest);
+                    if (!File.Exists(FileNameDest))
                     {
                         break;
                     }
+                    MessageBox.Show(FileNameDest);
                 }
+                //    C:\Users\dev\Desktop\second\secondTEXDT.txt
+                //    C:\Users\dev\Desktop\first\test.txt
             }
-            File.Copy(CopyFromTBox.Text, CopyToTBox.Text, true);
+            File.Copy(CopyFromTBox.Text, FileNameDest);
+            //if(int.Parse(CountCopiesTBox.Text) > 1)
+            //{
+            //    string FolderPath = CopyFromTBox.Text.Remove(CopyFromTBox.Text.LastIndexOf('\\'));
+            //    string[] tmp = Directory.GetFiles(FolderPath);
+            //    for (int i = 0; i < tmp.Length; i++)
+            //    {
+            //        CopyToTBox.Text += $"({i + 1})";
+            //        if (!File.Exists(CopyToTBox.Text))
+            //        {
+            //            break;
+            //        }
+            //    }
+            //}
 
         }
-        //    C:\Users\dev\Desktop\second\secondTEXDT.txt
-        //    C:\Users\dev\Desktop\first\test.txt
         private void CopyFrom_Button(object sender, RoutedEventArgs e)
         {
             

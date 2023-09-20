@@ -37,10 +37,13 @@
         <ProgressBar  Grid.Row="1" Grid.ColumnSpan="4" Margin="10" Foreground="DarkCyan" Name="CopyProgressBar" Height="30" Maximum="100" Minimum="0" Value="0"/>
 
         <Label VerticalAlignment="Center" FontSize="17" Grid.Row="2">Copy from :</Label>
-        <TextBox x:Name="CopyFromTBox" Grid.Row="2" Margin="100,10,10,10" Height="30" VerticalAlignment="Center" Grid.ColumnSpan="2"></TextBox>
+        <TextBox x:Name="CopyFromTBox" FontSize="17" Grid.Row="2" Margin="100,10,10,10" Height="30" VerticalAlignment="Center" Grid.ColumnSpan="2"></TextBox>
         
         <Label VerticalAlignment="Center" FontSize="17" Grid.Row="3">Copy to :</Label>
-        <TextBox x:Name="CopyToTBox" Grid.Row="3" Margin="100,10,10,10" Height="30" VerticalAlignment="Center" Grid.ColumnSpan="2"></TextBox>
+        <TextBox x:Name="CopyToTBox" FontSize="17" Grid.Row="3" Margin="100,10,10,10" Height="30" VerticalAlignment="Center" Grid.ColumnSpan="2"></TextBox>
+
+        <Label VerticalAlignment="Center" FontSize="17" Grid.Row="2" Grid.Column="2">Count copies :</Label>
+        <TextBox x:Name="CountCopiesTBox" FontSize="17" Text="1" Grid.Row="2" Grid.Column="2" Margin="120,10,10,10" Height="30" VerticalAlignment="Center" Grid.ColumnSpan="2"></TextBox>
 
         <Button Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Margin="10" FontSize="20" Click="Copy_Button">Copy</Button>
     </Grid>
