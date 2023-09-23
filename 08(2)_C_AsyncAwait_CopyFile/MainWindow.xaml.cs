@@ -1,9 +1,11 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices.ActiveDirectory;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,7 +15,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace _08_2__C_AsyncAwait_CopyFile
 {
@@ -27,81 +28,57 @@ namespace _08_2__C_AsyncAwait_CopyFile
             InitializeComponent();
         }
 
-        private string CheckFilesName(string FileName)
+        private async Task ProgressBarUpAsync(int Max)
         {
-            string FolderPath = CopyFromTBox.Text.Remove(CopyFromTBox.Text.LastIndexOf('\\'));
-            string[] tmp = Directory.GetFiles(FolderPath);
-            for (int i = 0; i < tmp.Length; i++)
+            CopyProgressBar.Maximum = Max;
+            for (int i = 0; i < Max; i++)
             {
-                //CopyToTBox.Text += $"({i + 1})";
-                FileName += $"({i + 1})";
-                if (!File.Exists(CopyToTBox.Text))
-                {
-                    break;
-                }
+                CopyProgressBar.Value++;
+                await Task.Delay(100);
             }
-            return FileName;
         }
-        private void Copy_Button(object sender, RoutedEventArgs e)
+        private async void Copy_Button(object sender, RoutedEventArgs e)
         {
+            CopyProgressBar.Value = 0;
             string FileNameDest = CopyToTBox.Text;
-            if (!File.Exists(CopyFromTBox.Text))
+            int coutCopies = int.Parse(CountCopiesTBox.Text);
+            for (int i = 0; i < coutCopies; i++)
             {
-                MessageBox.Show($"File {CopyFromTBox.Text} not exist!");
-                return;
-            }
-            else if (File.Exists(FileNameDest))
-            {
-                string FolderPath = CopyFromTBox.Text.Remove(CopyFromTBox.Text.LastIndexOf('\\'));
-                string[] tmp = Directory.GetFiles(FolderPath);
-                FileNameDest.Insert(FileNameDest.LastIndexOf('.'), $"(1)"); 
-                for (int i = 0; i < tmp.Length; i++)
+                if (!File.Exists(CopyFromTBox.Text))
                 {
-                    //if (FileNameDest.Contains('('))
-                    //{
-                    //    FileNameDest.Remove(FileNameDest.LastIndexOf('('));
-                    //    MessageBox.Show(FileNameDest);
-                    //}
-                    int indexNumber = FileNameDest.LastIndexOf(')') - 1;
-                    //FileNameDest.Replace(FileNameDest.LastIndexOf('(')), $"{indexNumber + 1}");
-                    FileNameDest.Replace($"({FileNameDest[indexNumber]})", $"({FileNameDest[indexNumber + 1]})");
-                    //FileNameDest.Remove(FileNameDest.LastIndexOf('.'));
-                    MessageBox.Show(FileNameDest);
-                    FileNameDest += $"({i + 1}).txt";
-                    MessageBox.Show(FileNameDest);
-                    if (!File.Exists(FileNameDest))
-                    {
-                        break;
-                    }
-                    MessageBox.Show(FileNameDest);
+                    MessageBox.Show($"File {CopyFromTBox.Text} not exist!");
+                    return;
                 }
-                //    C:\Users\dev\Desktop\second\secondTEXDT.txt
-                //    C:\Users\dev\Desktop\first\test.txt
+
+                string sourceFileName = Path.GetFileName(CopyFromTBox.Text);
+                string destinationFileName = Path.Combine(Path.GetDirectoryName(FileNameDest), sourceFileName);
+
+                int counter = 1;
+
+                while (File.Exists(destinationFileName))
+                {
+                    string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(sourceFileName);
+                    string fileExtension = Path.GetExtension(sourceFileName);
+                    destinationFileName = Path.Combine(Path.GetDirectoryName(FileNameDest), $"{fileNameWithoutExtension}({counter}){fileExtension}");
+                    counter++;
+                }
+
+                try
+                {
+                    File.Copy(CopyFromTBox.Text, destinationFileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error copying file : {ex.Message}");
+                }
+                await ProgressBarUpAsync(coutCopies);
             }
-            File.Copy(CopyFromTBox.Text, FileNameDest);
-            //if(int.Parse(CountCopiesTBox.Text) > 1)
-            //{
-            //    string FolderPath = CopyFromTBox.Text.Remove(CopyFromTBox.Text.LastIndexOf('\\'));
-            //    string[] tmp = Directory.GetFiles(FolderPath);
-            //    for (int i = 0; i < tmp.Length; i++)
-            //    {
-            //        CopyToTBox.Text += $"({i + 1})";
-            //        if (!File.Exists(CopyToTBox.Text))
-            //        {
-            //            break;
-            //        }
-            //    }
-            //}
 
-        }
-        private void CopyFrom_Button(object sender, RoutedEventArgs e)
-        {
-            
-        }
+            //    //    C:\Users\dev\Desktop\second\secondTEXDT.txt
+            //    //    C:\Users\dev\Desktop\first\test.txt
 
-        private void CopyTo_Button(object sender, RoutedEventArgs e)
-        {
-
+            //    //    C:\Users\RTX\OneDrive\Desktop\second\secondTEXDT.txt
+            //    //    C:\Users\RTX\OneDrive\Desktop\first\test.txt
         }
     }
 }
