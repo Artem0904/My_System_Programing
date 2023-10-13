@@ -22,18 +22,13 @@ namespace _06_H_Theards
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ViewModel viewModel = new();
-
         public MainWindow()
         {
             InitializeComponent();
-            viewModel = new ViewModel();
-            this.DataContext = viewModel;
-            PrimeNumbersListBox.ItemsSource = PrimaryNums;
         }
         private List<int> FibonacciNums = new List<int>();
         private List<int> PrimaryNums = new List<int>();
-
+        bool firstPrimaryStart = true;
         private void Fibonacci(int right)
         {
             int a = 0;
@@ -70,42 +65,54 @@ namespace _06_H_Theards
 
             return result;
         }
-        private int PrimeNums(int left, int right)
+        private Task<int> PrimeNumAsync(int left, int right)
         {
-            if (left > right)
+            return Task.Run(() =>
             {
-                int tmp;
-                tmp = left;
-                left = right;
-                right = tmp;
-            }
-            int Count = 0;
-            for (int i = left; i < right; i++)
-            {
-                if (IsPrimeNumber(i))
+                
+                if (left > right)
                 {
-                    PrimaryNums.Add(i);
-                    Count++;
+                    int tmp;
+                    tmp = left;
+                    left = right;
+                    right = tmp;
                 }
+                int Num = 0;
+                for (int i = left; i < right; i++)
+                {
+                    if (IsPrimeNumber(i))
+                    {
+                        Num = i;
+                        PrimaryNums.Add(i);
+                        if (!firstPrimaryStart)
+                        {
+                            break;
+                        }
+                        firstPrimaryStart = true;
+                        //PrimeListBox.Items.Add(i);
+                        //break;
+                    }
+                }
+                return Num;
+            });
+        }
+        private async void GeneratePrimary_Click(object sender, RoutedEventArgs e)
+        {
+            int left = int.Parse(LeftPrimaryTBox.Text);
+            int right = int.Parse(RightPrimaryTBox.Text);
+            PrimaryNums = new List<int>();
+            PrimeListBox.Items.Add(await PrimeNumAsync(left, right));
+            for(int i = 0; i < PrimaryNums.Count - 1; i++)
+            {
+                PrimeListBox.Items.Add(await PrimeNumAsync(left, right));
             }
-            return Count;
         }
-        private void Generate_Click(object sender, RoutedEventArgs e)
+
+        private void GenerateFibonacci_Click(object sender, RoutedEventArgs e)
         {
-            PrimeNums(viewModel.leftPrimary, viewModel.rightPrimary);
-            Fibonacci(viewModel.rightFibonacci);
-        }
-
-
-        [PropertyChanged.AddINotifyPropertyChangedInterface]
-        public class ViewModel
-        {
-            public int leftPrimary;
-            public int rightPrimary;
-            public int rightFibonacci;
-
 
         }
+
         //Завдання 1:
         //Створіть віконний додаток, який генерує набір простих чисел в
         //діапазоні, вказаному користувачем. Якщо не вказано нижню

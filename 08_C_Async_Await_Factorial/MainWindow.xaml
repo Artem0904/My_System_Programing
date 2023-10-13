@@ -7,12 +7,31 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <DockPanel>
-        <ToolBar DockPanel.Dock="Top">
-            <Label>Number:</Label>
-            <TextBox x:Name="NumberTextBox" MinWidth="100"></TextBox>
-            <Button Click="AddFactorial_Click">Add</Button>
-        </ToolBar>
-        <ListBox x:Name="FactorialListBox" Margin="5,0,5,5"></ListBox>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            
+            <ToolBar Grid.Row="0" Grid.Column="0">
+                <Label>Number simple:</Label>
+                <TextBox x:Name="NumberSimpleTBox" MinWidth="100"></TextBox>
+                <Button Click="AddSimple_Click">Add</Button>
+            </ToolBar>
+            <ToolBar Grid.Row="0" Grid.Column="1">
+                <Label>Number fibonacci:</Label>
+                <TextBox x:Name="NumberFibonacciTBox" MinWidth="100"></TextBox>
+                <Button Click="AddFibonacci8_Click">Add</Button>
+            </ToolBar>
 
+            <ListBox Grid.Row="1" x:Name="SimpleListBox" Margin="5,0,5,5"></ListBox>
+            <ListBox Grid.Row="1" Grid.Column="1" x:Name="FibonacciListBox" Margin="5,0,5,5"></ListBox>
+        </Grid>
+    
     </DockPanel>
 </Window>

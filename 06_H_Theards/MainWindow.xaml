@@ -6,32 +6,33 @@
         xmlns:local="clr-namespace:_06_H_Theards"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Height="30" Margin="5" Grid.Column="0" Grid.Row="0" Click="Generate_Click">Generate</Button>
-        <TextBox Grid.Column="1" Margin="5" Padding="5" VerticalAlignment="Center">Left</TextBox>
-        <TextBox Grid.Column="2" Margin="5" Padding="5" VerticalAlignment="Center">Right</TextBox>
-        <TextBox Grid.Column="3" Margin="5" Padding="5" VerticalAlignment="Center">Fibonacci right</TextBox>
-        <!--<DataGrid Name="DataGrid" AutoGenerateColumns="false" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Numbers" Binding="{Binding ProcessName}" />
-                <DataGridTextColumn Header="Fibonachy" Binding="{Binding ProcessName}" />
-            </DataGrid.Columns>
-        </DataGrid>-->
-        <ListBox Grid.Row="1" Grid.ColumnSpan="3" x:Name="PrimeNumbersListBox" Margin="10" ItemsSource="{Binding PrimaryNums}"/>
-        <ListBox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" x:Name="FibonacciNumbersListBox" Margin="10" ItemsSource="{Binding FibonacciNumbers}"/>
-    </Grid>
+        
 
+        <ToolBar Grid.Row="0" Grid.Column="0">
+            <Label>Left:</Label>
+            <TextBox x:Name="LeftPrimaryTBox" Width="40" Margin="0,0,10,0"></TextBox>
+            <Label>Right:</Label>
+            <TextBox x:Name="RightPrimaryTBox" Width="40" Margin="0,0,10,0"></TextBox>
+            <Button Click="GeneratePrimary_Click" Background="Aqua">Generate</Button>
+        </ToolBar>
+        <ToolBar Grid.Row="0" Grid.Column="1">
+            <Label>Left:</Label>
+            <TextBox x:Name="LeftFibonacciTBox" Width="40" Margin="0,0,10,0"></TextBox>
+            <Label>Right:</Label>
+            <TextBox x:Name="RightFibonacciTBox" Width="40" Margin="0,0,10,0"></TextBox>
+            <Button Click="GenerateFibonacci_Click" Background="Aqua">Generate</Button>
+        </ToolBar>
+
+        <ListBox Grid.Row="1" x:Name="PrimeListBox" Margin="5,0,5,5"></ListBox>
+        <ListBox Grid.Row="1" Grid.Column="1" x:Name="FibonacciListBox" Margin="5,0,5,5"></ListBox>
+    </Grid>
 </Window>
