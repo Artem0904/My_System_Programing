@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,8 +28,12 @@ namespace _06_H_Theards
             InitializeComponent();
         }
         private List<int> FibonacciNums = new List<int>();
-        private List<int> PrimaryNums = new List<int>();
         bool firstPrimaryStart = true;
+     
+        private bool generating;
+        private CancellationTokenSource cancelToken;
+      
+        
         private void Fibonacci(int right)
         {
             int a = 0;
@@ -65,47 +70,85 @@ namespace _06_H_Theards
 
             return result;
         }
-        private Task<int> PrimeNumAsync(int left, int right)
+
+        //private async void GeneratePrimary_Click(object sender, RoutedEventArgs e)
+        //{
+        //    int left = int.Parse(LeftPrimaryTBox.Text);
+        //    int right = int.Parse(RightPrimaryTBox.Text);
+
+        //    //List<int> PrimaryNums = await FindPrimesAsync(left, right);
+        //    //foreach (int prime in PrimaryNums)
+        //    //{
+        //        //PrimeListBox.Items.Add(prime);
+        //    //}
+        //    for(int i = 1; i < right; i++)
+        //    {
+        //        PrimeListBox.Items.Add(await FindPrimesAsync(left,right));
+        //        Thread.Sleep(500);
+        //        left++;
+        //    }
+        //}
+
+        ////private async Task<List<int>> FindPrimesAsync(int left, int right)
+        //private async Task<int> FindPrimesAsync(int left, int right)
+        //{
+        //    //List<int> PrimaryNums = new List<int>();
+        //    int PrimeNum = 0;
+        //    await Task.Run(() =>
+        //    {
+        //        for (int num = left; num <= right; num++)
+        //        {
+        //            if (IsPrimeNumber(num))
+        //            {
+        //                PrimeNum = num;
+        //                break;
+        //                //PrimaryNums.Add(num);
+        //            }
+        //        }
+        //    });
+        //    //return PrimaryNums;
+        //    return PrimeNum;
+        //}
+
+        private void GeneratePrimary_Click(object sender, RoutedEventArgs e)
         {
-            return Task.Run(() =>
+            if (generating)
             {
-                
-                if (left > right)
-                {
-                    int tmp;
-                    tmp = left;
-                    left = right;
-                    right = tmp;
-                }
-                int Num = 0;
-                for (int i = left; i < right; i++)
-                {
-                    if (IsPrimeNumber(i))
-                    {
-                        Num = i;
-                        PrimaryNums.Add(i);
-                        if (!firstPrimaryStart)
-                        {
-                            break;
-                        }
-                        firstPrimaryStart = true;
-                        //PrimeListBox.Items.Add(i);
-                        //break;
-                    }
-                }
-                return Num;
-            });
-        }
-        private async void GeneratePrimary_Click(object sender, RoutedEventArgs e)
-        {
-            int left = int.Parse(LeftPrimaryTBox.Text);
-            int right = int.Parse(RightPrimaryTBox.Text);
-            PrimaryNums = new List<int>();
-            PrimeListBox.Items.Add(await PrimeNumAsync(left, right));
-            for(int i = 0; i < PrimaryNums.Count - 1; i++)
-            {
-                PrimeListBox.Items.Add(await PrimeNumAsync(left, right));
+                // Вимкнути генерацію
+                cancelToken.Cancel();
+                generating = false;
             }
+            else
+            {
+                // Почати генерацію
+                int left = string.IsNullOrWhiteSpace(LeftPrimaryTBox.Text) ? 2 : int.Parse(LeftPrimaryTBox.Text);
+                int right = string.IsNullOrWhiteSpace(RightPrimaryTBox.Text) ? int.MaxValue : int.Parse(RightPrimaryTBox.Text);
+
+                PrimeListBox.Items.Clear();
+                generating = true;
+                cancelToken = new CancellationTokenSource();
+
+                ThreadPool.QueueUserWorkItem(o => GeneratePrimes(left, right, cancelToken.Token));
+            }
+        }
+
+        private async void GeneratePrimes(int left, int right, CancellationToken token)
+        {
+            for (int num = left; num <= right; num++)
+            {
+                if (token.IsCancellationRequested)
+                {
+                    await Dispatcher.InvokeAsync(() => generating = false);
+                    return;
+                }
+
+                if (IsPrimeNumber(num))
+                {
+                    await Dispatcher.InvokeAsync(() => PrimeListBox.Items.Add(num));
+                }
+            }
+
+            Dispatcher.Invoke(() => generating = false);
         }
 
         private void GenerateFibonacci_Click(object sender, RoutedEventArgs e)
